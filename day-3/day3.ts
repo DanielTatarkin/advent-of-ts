@@ -2,8 +2,8 @@ interface GearsMap {
   [gear_loc: string]: Set<string>
 }
 
-const EMPTY_CELL = '.'
-const GEAR = '*'
+const EMPTY_CELL = "."
+const GEAR = "*"
 
 const isANumber = (cell: string) => !isNaN(parseInt(cell))
 
@@ -16,8 +16,16 @@ const run_day3_solution = (input: string[]): number => {
   const gearMap: GearsMap = {}
 
   function bfs(row: number, col: number): [boolean, string] {
-
-    const toCheck = [[-1, -1], [-1, 0], [-1, 1], [1, -1], [1, 0], [1, 1], [0, -1], [0, 1]]
+    const toCheck = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1],
+      [0, -1],
+      [0, 1],
+    ]
     const stack: [number[]] = [[row, col]]
     let runningNumber: string = input[row][col]
     let hasSymbol: boolean = false
@@ -33,10 +41,12 @@ const run_day3_solution = (input: string[]): number => {
         const colToCheck = col + c_col
 
         if (
-          (0 <= rowToCheck && rowToCheck < rows) &&
-          (0 <= colToCheck && colToCheck < cols) &&
-          (input[rowToCheck][colToCheck] !== EMPTY_CELL) &&
-          (!visited.has(`${rowToCheck} ${colToCheck}`))
+          0 <= rowToCheck &&
+          rowToCheck < rows &&
+          0 <= colToCheck &&
+          colToCheck < cols &&
+          input[rowToCheck][colToCheck] !== EMPTY_CELL &&
+          !visited.has(`${rowToCheck} ${colToCheck}`)
         ) {
           const cell = input[rowToCheck][colToCheck]
           if (isANumber(cell)) {
@@ -55,7 +65,7 @@ const run_day3_solution = (input: string[]): number => {
     }
 
     for (const gear of gears) {
-      gearMap[gear] ? gearMap[gear].add(runningNumber) : gearMap[gear] = new Set([runningNumber])
+      gearMap[gear] ? gearMap[gear].add(runningNumber) : (gearMap[gear] = new Set([runningNumber]))
     }
 
     return [hasSymbol, runningNumber]
@@ -74,7 +84,7 @@ const run_day3_solution = (input: string[]): number => {
     }
   }
 
-  console.log(`Sum of parts ${sumOfPartNumbers}`);
+  console.log(`Sum of parts ${sumOfPartNumbers}`)
 
   let sumOfGearRatios = 0
   for (let partNumbers of Object.values(gearMap)) {
@@ -86,7 +96,7 @@ const run_day3_solution = (input: string[]): number => {
       sumOfGearRatios += product
     }
   }
-  console.log(`Sum of gear ratios ${sumOfGearRatios}`);
+  console.log(`Sum of gear ratios ${sumOfGearRatios}`)
 
   return sumOfPartNumbers
 }
@@ -105,8 +115,7 @@ const testInput = [
 ]
 if (run_day3_solution(testInput) !== 4361) throw `${run_day3_solution(testInput)} is not 4361`
 
-
-const file = Bun.file("./day-3/day3-input.txt");
-const text = await file.text();
-const input = text.split('\n')
+const file = Bun.file("./day-3/day3-input.txt")
+const text = await file.text()
+const input = text.split("\n")
 run_day3_solution(input)

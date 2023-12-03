@@ -1,31 +1,26 @@
 // Red Green Blue
 // unknown number of cubes of each color
 // figure out number of cubes
-// 
+//
 // 1. random cubes will be shown a few times per game
 
 // ONLY 12 red cubes, 13 green cubes, and 14 blue cubes
 interface CubeCount {
-  red: number,
-  green: number,
-  blue: number,
+  red: number
+  green: number
+  blue: number
 }
 
-
 const isSetValid = (set: string, leastCubes: CubeCount) => {
-  const colors = set.split(',')
+  const colors = set.split(",")
   let isValid = true
   for (const color of colors) {
-    console.log(color);
+    console.log(color)
 
-    let [numOfCubes, colorName] = color.trim().split(' ')
+    let [numOfCubes, colorName] = color.trim().split(" ")
     const cubeCount = parseInt(numOfCubes)
-    console.log(`numOfCubes: ${numOfCubes} colorName: ${colorName}`);
-    if (
-      (colorName === "red" && cubeCount > 12) ||
-      (colorName === "green" && cubeCount > 13) ||
-      (colorName === "blue" && cubeCount > 14)
-    ) {
+    console.log(`numOfCubes: ${numOfCubes} colorName: ${colorName}`)
+    if ((colorName === "red" && cubeCount > 12) || (colorName === "green" && cubeCount > 13) || (colorName === "blue" && cubeCount > 14)) {
       isValid = false
     }
 
@@ -39,7 +34,7 @@ const isSetValid = (set: string, leastCubes: CubeCount) => {
 const isGameValid = (sets: string[], leastCubes: CubeCount) => {
   let isValid = true
   for (const set of sets) {
-    console.log(set);
+    console.log(set)
     if (!isSetValid(set, leastCubes)) {
       isValid = false
     }
@@ -47,15 +42,14 @@ const isGameValid = (sets: string[], leastCubes: CubeCount) => {
   return isValid
 }
 
-
 const run_day2_solution = (input: string[]) => {
   let sumOfValidGameIds = 0
   let sumOfPowerOfCubes = 0
 
   for (const game of input) {
-    console.log(game);
-    const [gameInfo, sets] = game.split(':')
-    const gameId = parseInt(gameInfo.split(' ')[1])
+    console.log(game)
+    const [gameInfo, sets] = game.split(":")
+    const gameId = parseInt(gameInfo.split(" ")[1])
 
     const leastCubes: CubeCount = {
       red: -1,
@@ -63,16 +57,15 @@ const run_day2_solution = (input: string[]) => {
       blue: -1,
     }
 
-    if (isGameValid(sets.trim().split(';'), leastCubes)) {
+    if (isGameValid(sets.trim().split(";"), leastCubes)) {
       sumOfValidGameIds += gameId
     }
     sumOfPowerOfCubes += leastCubes.red * leastCubes.green * leastCubes.blue
   }
-  console.log(`Sum of valid games: ${sumOfValidGameIds}`);
-  console.log(`Sum of power of cubes: ${sumOfPowerOfCubes}`);
+  console.log(`Sum of valid games: ${sumOfValidGameIds}`)
+  console.log(`Sum of power of cubes: ${sumOfPowerOfCubes}`)
   return sumOfValidGameIds
 }
-
 
 const testInput = [
   "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
@@ -83,7 +76,6 @@ const testInput = [
 ]
 if (run_day2_solution(testInput) !== 8) throw `${run_day2_solution(testInput)} is not 8`
 
-
 const testInput2 = [
   "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
   "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
@@ -93,11 +85,10 @@ const testInput2 = [
 ]
 if (run_day2_solution(testInput2) !== 3) throw `${run_day2_solution(testInput2)} is not 3`
 
-const file = Bun.file("./day-2/day2-input.txt");
-const text = await file.text();
-const input = text.split('\n')
+const file = Bun.file("./day-2/day2-input.txt")
+const text = await file.text()
+const input = text.split("\n")
 run_day2_solution(input)
-
 
 const testInput3 = [
   "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
